@@ -1,0 +1,31 @@
+# Fly.io deployment config for the Telegram membership bot.
+# Run:  fly launch --no-deploy  (or just edit `app` below if you already created one)
+# Then set your secrets (see README) and deploy.
+
+app = "elsinkiepobot-membership"
+primary_region = "lhr"   # London region
+
+[build]
+
+[processes]
+  app = "node dist/index.js"
+
+[http_service]
+  internal_port = 8080
+  force_https = true
+  auto_stop_machines = "off"
+  auto_start_machines = true
+  min_machines_running = 1
+
+[[mounts]]
+  source = "membership_data"
+  destination = "/app/data"
+
+[checks]
+  [checks.health]
+    type = "http"
+    interval = "30s"
+    timeout = "5s"
+    grace_period = "10s"
+    method = "GET"
+    path = "/health"
