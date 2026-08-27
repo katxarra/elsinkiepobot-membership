@@ -7,9 +7,6 @@ primary_region = "lhr"   # London region
 
 [build]
 
-[processes]
-  app = "node dist/index.js"
-
 [http_service]
   internal_port = 8080
   force_https = true
